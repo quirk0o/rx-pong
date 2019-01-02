@@ -1,0 +1,21 @@
+.board {
+    position: relative;
+    margin: 25px;
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+    border: 1px solid gray;
+}
+
+.board__paddle {
+    position: absolute;
+}
+
+.board__paddle:first-child {
+    top: 0;
+    left: 0;
+}
+
+.board__paddle:last-child {
+    top: 0;
+    right: 0;
+}
