@@ -1,0 +1,7 @@
+.board__ball {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: red;
+}

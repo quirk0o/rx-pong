@@ -1,6 +1,17 @@
 import React, {Component} from 'react'
 import {fromEvent, interval, merge} from 'rxjs'
-import {buffer, filter, map, mergeMap, scan, startWith, takeUntil, throttle} from 'rxjs/operators'
+import {
+  buffer,
+  filter,
+  map,
+  mapTo,
+  mergeMap,
+  scan,
+  startWith,
+  takeUntil,
+  throttle,
+  withLatestFrom
+} from 'rxjs/operators'
 
 import {Board} from '../board/board'
 
@@ -18,7 +29,7 @@ export class Game extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {paddleLeft: 0, paddleRight: 0}
+    this.state = {paddleLeft: 0, paddleRight: 0, ball: [props.size * 1.5 / 2, props.size / 2]}
 
     this.keyDown$ = fromEvent(document, 'keydown')
 
@@ -79,14 +90,24 @@ export class Game extends Component {
       }, 0)
     )
 
+    this.ball$ = merge(
+
+    ).pipe(
+      scan((pos, vec) => {
+        console.log(pos, vec)
+        return [pos[0] + vec[0], pos[1] + vec[1]]
+      }, this.state.ball)
+    )
+
     this.paddleLeft$.subscribe((paddleLeft) => this.setState({paddleLeft}))
     this.paddleRight$.subscribe((paddleRight) => this.setState({paddleRight}))
+    this.ball$.subscribe((ball) => this.setState({ball}))
   }
 
   render () {
     const {size} = this.props
-    const {paddleLeft, paddleRight} = this.state
+    const {paddleLeft, paddleRight, ball} = this.state
 
-    return <Board size={size} paddleLeft={paddleLeft} paddleRight={paddleRight} />
+    return <Board size={size} paddleLeft={paddleLeft} paddleRight={paddleRight} ball={ball} />
   }
 }

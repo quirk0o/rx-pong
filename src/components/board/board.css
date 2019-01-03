@@ -9,12 +9,12 @@
     position: absolute;
 }
 
-.board__paddle:first-child {
+.board__paddle:first-of-type {
     top: 0;
     left: 0;
 }
 
-.board__paddle:last-child {
+.board__paddle:last-of-type {
     top: 0;
     right: 0;
 }
